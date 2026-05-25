@@ -32,6 +32,12 @@ const registerUser = async (req, res) => {
         });
 
     } catch (error) {
+        if (error && error.code === 11000) {
+            return res.status(400).json({
+                message: "Duplicate key error",
+                details: error.keyValue
+            });
+        }
 
         res.status(500).json({
             message: error.message
